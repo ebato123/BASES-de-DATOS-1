@@ -1,45 +1,100 @@
--- 1. Mostrar todos los registros de la tabla de movies.
+-- Categorías y productos:
 
-SELECT * FROM movies;
+-- 1. Queremos tener un listado de todas las categorías.
 
--- 2. Mostrar el nombre, apellido y rating de todos los actores.
+SELECT * FROM categorias;
 
-SELECT first_name, last_name, rating FROM actors;
+-- 2. Como las categorías no tienen imágenes, solamente interesa obtener un
+--    listado de CategoriaNombre y Descripcion.
 
--- 3. Mostrar el título de todas las series.
+SELECT CategoriaNombre, Descripcion
+FROM categorias;
 
-SELECT title FROM series;
+-- 3. Obtener un listado de los productos.
 
--- 4. Mostrar el nombre y apellido de los actores cuyo rating sea mayor a 7,5.
+SELECT * FROM productos;
 
-SELECT first_name, last_name FROM actors
-WHERE rating > 7.5;
+-- 4. ¿Existen productos discontinuados? (Discontinuado = 1).
 
--- 5. Mostrar el título de las películas, el rating y los premios de las películas con un rating mayor a 7,5 y con más de dos premios.
+SELECT * FROM productos
+WHERE Discontinuado = 1;
 
-SELECT title, rating, awards FROM movies
-WHERE rating > 7.5
-AND awards > 2;
+-- 5. Para el viernes hay que reunirse con el Proveedor 8. ¿Qué productos son
+--    los que nos provee?
 
--- 6. Mostrar el título de las películas y el rating ordenadas por rating en forma ascendente.
+SELECT * FROM proveedores
+WHERE proveedorID = 8;
 
-SELECT title, rating FROM movies
-ORDER BY rating DESC;
+-- 6. Queremos conocer todos los productos cuyo precio unitario se encuentre
+--    entre 10 y 22.
 
--- 7. Mostrar el título y rating de todas las películas cuyo título incluya Toy Story.
+SELECT * FROM productos
+WHERE PrecioUnitario BETWEEN 10 AND 22;
 
-SELECT title, rating FROM movies
-WHERE title LIKE "%Toy Story%";
+-- 7. Se define que un producto hay que solicitarlo al proveedor si sus unidades
+--    en stock son menores al Nivel de Reorden. ¿Hay productos por solicitar?
 
--- 8. Mostrar a todos los actores cuyos nombres empiecen con Sam.
+SELECT * FROM productos
+WHERE UnidadesStock < NivelReorden;
 
-SELECT * FROM actors
-WHERE first_name LIKE "Sam%";
+-- 8. Se quiere conocer todos los productos del listado anterior, pero que
+--    unidades pedidas sea igual a cero.
 
--- 9. 9. Mostrar el título de las películas que salieron entre el ‘2004-01-01’ y ‘2008-12-31’.
+SELECT * FROM productos
+WHERE UnidadesPedidas = 0;
 
-SELECT title FROM movies
-WHERE release_date BETWEEN "2004-01-01" AND "2008-12-31";
+-- Clientes
+
+-- 1. Obtener un listado de todos los clientes con Contacto, Compania, Título,
+--    País. Ordenar el listado por País.
+
+SELECT Contacto, Compania, Titulo, Pais FROM clientes
+ORDER BY Pais;
+
+-- 2. Ahora se requiere un listado de las facturas con el país de envío “USA” y
+--    que su correo (EnvioVia) sea distinto de 3.
+
+SELECT * FROM facturas
+WHERE PaisEnvio = "USA"
+AND EnvioVia != 3;
+
+-- 3. ¿El cliente 'GOURL' realizó algún pedido?
+
+SELECT * FROM facturas
+WHERE ClienteID LIKE "GOURL";
+
+-- Facturas: 
+-- 1. Obtener un listado de todas las facturas, ordenado por fecha de factura
+--    ascendente.
+
+SELECT * FROM facturas
+ORDER BY FechaFactura DESC;
+
+-- 2. Ahora se requiere un listado de las facturas con el país de envío “USA” y
+--    que su correo (EnvioVia) sea distinto de 3.
+
+SELECT * FROM facturas
+WHERE PaisEnvio LIKE "USA"
+AND EnvioVia != 3;
+
+-- 3. ¿El cliente 'GOURL' realizó algún pedido?
+
+SELECT * FROM facturas 
+WHERE ClienteID LIKE "GOURL";
+
+-- 4. Se quiere visualizar todas las facturas de los empleados 2, 3, 5, 8 y 9.
+
+SELECT * FROM facturas
+WHERE EmpleadoID = 2 
+OR EmpleadoID = 3 
+OR EmpleadoID = 5 
+OR EmpleadoID = 8 
+OR EmpleadoID = 9;
+
+
+
+
+
 
 
 
