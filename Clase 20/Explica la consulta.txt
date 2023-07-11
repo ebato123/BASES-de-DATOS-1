@@ -1,0 +1,48 @@
+EXPLICA LA CONSULTA
+
+SQL 1:
+
+SELECT titulo, nombre
+FROM albumes
+JOIN artistas 
+ON albumes.id_artista = artistas.id
+WHERE nombre= "Deep Purple"
+
+Toma información desde la tabla albumes (FROM albumes), y también desde la tabla artistas (JOIN artistas).
+Relaciona estas dos tablas con un id en común (ON albumes.id_artista = artistas.id) y las condiciona para 
+que solamente muestren datos donde la tabla nombre sea IGUAL a "Deep Purple" (WHERE nombre = "Deep Purple").
+Finalmente selecciona las columnas sobre las que se consultará la información (SELECT titulo, nombre).
+
+SQL 2:
+
+SELECT ClienteID, SUM(PrecioUnitario * Cantidad) as Total
+FROM facturas
+JOIN facturadetalle 
+ON facturas.facturaID = facturadetalle.facturaId
+GROUP By ClienteID
+ORDER BY SUM(PrecioUnitario * Cantidad) DESC
+LIMIT 5
+
+Toma información desde la tabla facturas (FROM facturas), y también desde la tabla facturadetalle (JOIN facturadetalle).
+Relaciona estas dos tablas con un id en común (ON facturas.facturaID = facturadetalle.facturaId) y ordena los datos para 
+que se muestren agrupados por ClienteID (GROUP By ClienteID). Selecciona las columnas sobre las que se consultará la 
+información, utilizando funciones de agregación ya agrupadas (SELECT ClienteID, SUM(PrecioUnitario * Cantidad) as Total).
+Ordena los resultados de forma descendente según la columna Total (ORDER BY SUM(PrecioUnitario * Cantidad) DESC) y limita
+los resultados a 5 registros (LIMIT 5).
+
+SQL 3:
+
+SELECT month(rental_date) mes,
+ SUM(amount) AS Monto, 
+ COUNT(*) AS CantidadAlquileres
+FROM payment
+JOIN rental
+ON payment.rental_id = rental.rental_id
+WHERE year(rental_date) = 2005
+GROUP BY month(rental_date);
+
+Toma información desde la tabla payment (FROM payment), y también desde la tabla rental (JOIN rental).
+Relaciona estas dos tablas con un id en común (ON payment.rental_id = rental.rental_id) y las condiciona para 
+que solamente muestren datos donde el año de rental_date sea IGUAL a 2005 (WHERE year(rental_date) = 2005).
+Ordena los datos para que se muestren agrupados por mes (GROUP BY month(rental_date)) y finalmente selecciona 
+la columna sobre las que se consultará la información, utilizando funciones de alteracion (SELECT month(rental_date) mes).
